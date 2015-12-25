@@ -1,6 +1,8 @@
 language: erlang
+sudo: false
 otp_release:
 # Test on all supported releases accepted by the `require_otp_vsn` in rebar.config
+   - 18.0
    - 17.4
    - 17.3
    - 17.1
@@ -16,10 +18,8 @@ otp_release:
 #   - R15B01 failing with timeout
 #   - R15B failing with timeout
 
-# since Travis is naughty and calls rebar get-deps behind our backs,
-# we'll have to clean it up and build merl our selves..
 script: 
-  - "make -C deps/merl && make check"
+  - "[ ! -d deps/merl ] || make -C deps/merl && make check"
 
 notifications:
   irc: "chat.freenode.net#erlydtl"

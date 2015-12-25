@@ -18,6 +18,7 @@ update-deps:
 	@$(REBAR) update-deps
 
 .PHONY: tests
+tests: export EXTRA_CONFIG=rebar-tests.config
 tests: src/erlydtl_parser.erl
 	@$(REBAR) eunit
 
@@ -44,7 +45,7 @@ plt: compile
 		$(PLT_APPS) deps/* || [ $$? -eq 2 ];
 
 clean:
-	@echo "Clean merl..." ; $(MAKE) -C deps/merl clean
+	@[ ! -d deps/merl ] || { echo "Clean merl..." ; $(MAKE) -C deps/merl clean ;}
 	@$(REBAR) -C rebar-slex.config clean
 	rm -fv erl_crash.dump
 
